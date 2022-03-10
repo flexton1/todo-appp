@@ -11,4 +11,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: none;
     color: white;
     font-weight: 600;
+    opacity: 0.9;
+
+    &:hover{
+        opacity: 1;
+        color: white;
+        box-shadow: 0px 0px 0px 4px rgba(black, 0.05);
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+    &:focus {
+        color: white;
+        opacity: 1;
+    }
+
+    mat-icon {
+        margin-right: 5px;
+        margin-left: -3px;
+    }
+
+
 }
+
+
+ 
