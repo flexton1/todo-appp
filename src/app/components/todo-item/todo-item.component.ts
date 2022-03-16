@@ -4,24 +4,26 @@ import { Todo } from 'src/app/services/todo.model';
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
-  styleUrls: ['./todo-item.component.scss']
+  styleUrls: ['./todo-item.component.scss'],
 })
 export class TodoItemComponent implements OnInit {
-
-  @Input()
-  todo!: Todo;
+  @Input()  todo!: Todo;
+  
   @Output() todoClicked: EventEmitter<void> = new EventEmitter();
-@Output() editClicked: EventEmitter<void> = new EventEmitter();
+  @Output() editClicked: EventEmitter<void> = new EventEmitter();
+  @Output() deleteClicked: EventEmitter<void> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  onTodoClicked(){
+  onTodoClicked() {
     this.todoClicked.emit();
   }
   onEditClicked() {
-   this.editClicked.emit();
+    this.editClicked.emit();
+  }
+  onDeleteClicked() {
+    this.deleteClicked.emit();
   }
 }

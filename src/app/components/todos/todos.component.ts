@@ -4,51 +4,65 @@ import { DataService } from 'src/app/services/data.service';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditTodoDialogComponent } from '../edit-todo-dialog/edit-todo-dialog.component';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit {
-
-  todos!: Todo[];
+  todo: Todo = new Todo();
+  todos: Todo[] = [];
   showValidationError: boolean = false;
 
-
-  constructor(private dataService: DataService, private dialog: MatDialog) { }
+  constructor(
+    private _dataService: DataService,
+    private dialog: MatDialog,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.todos = this.dataService.getAllTodos();
+    this._dataService.getAllTodos().subscribe((data) => (this.todos = data));
   }
 
-onFormSubmit(form: NgForm){
-  if (form.invalid) {return this.showValidationError = true}else {
-    
-    this.dataService.addTodo(new Todo(form.value.text));
-    this.showValidationError = false;
-    return form.reset();
-  
-  
+  onFormSubmit(form: NgForm) {
+    if (form.invalid) {
+      return (this.showValidationError = true);
+    } else {
+      this._dataService.addTodo(this.todo).subscribe((data) => {
+        console.log('response', data);
+        this._router.navigate([this._router.url]);
+      });
+      this.showValidationError = false;
+      form.reset();
+      return window.location.reload();
+    }
   }
- }
-toggleCompleted(todo: Todo) {
-  // set todo to completed  
-  todo.completed = !todo.completed;
-}
+  toggleCompleted(id:number, todo: Todo) {
+this._dataService.updateTodo(id, todo);
+return window.location.reload();
+  }
 
-editTodo(todo: Todo) {
-  const index = this.todos.indexOf(todo);
-
-  let dialogRef = this.dialog.open(EditTodoDialogComponent, {
+  editTodo(todo: Todo) {
     
-    width: '80%',
-  });
 
+    let dialogRef = this.dialog.open(EditTodoDialogComponent, {
+      width: '70%',
+      data: todo,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this._dataService.addTodo(this.todo);
+    });
+  }
+
+  deleteTodo(id: number) {
+    this._dataService.deleteTodo(id).subscribe((data) => {
+      console.log(' deleted response', data);
+      this._router.navigateByUrl('/todos');
+      return window.location.reload();
+    });
+  }
 }
-
-}
-
-
-
