@@ -31,6 +31,8 @@ export class DataService {
     return this._httpClient.delete(`${this.getUrl}/${id}`, {responseType: 'text'});
   }
 
+  //updateTodo not working
+
  updateTodo(id: number, todo: Todo): Observable<Todo>{
 
   return this._httpClient.put<Todo>(`${this.getUrl}/${id}`, todo);
