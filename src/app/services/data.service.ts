@@ -31,7 +31,7 @@ export class DataService {
     return this._httpClient.delete(`${this.getUrl}/${id}`, {responseType: 'text'});
   }
 
-  //updateTodo not working
+  //updateTodo works
 
  updateTodo(id: number): Observable<any>{
 
