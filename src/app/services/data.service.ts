@@ -33,9 +33,9 @@ export class DataService {
 
   //updateTodo not working
 
- updateTodo(id: number, todo: Todo): Observable<Todo>{
+ updateTodo(id: number): Observable<any>{
 
-  return this._httpClient.put<Todo>(`${this.getUrl}/${id}`, todo);
+  return this._httpClient.put(this.getUrl + `/${id}`, {responseType: "text"});
  }
   
  }

@@ -31,6 +31,7 @@ export class TodosComponent implements OnInit {
     if (form.invalid) {
       return (this.showValidationError = true);
     } else {
+      this.todo.completed = false;
       this._dataService.addTodo(this.todo).subscribe((data) => {
         console.log('response', data);
         this._router.navigate([this._router.url]);
@@ -40,8 +41,12 @@ export class TodosComponent implements OnInit {
       return window.location.reload();
     }
   }
-  toggleCompleted(id:number, todo: Todo) {
-this._dataService.updateTodo(id, todo);
+  toggleCompleted(id: number) {
+    
+this._dataService.updateTodo(id).subscribe((data) => {
+  console.log("updated", data);
+ 
+});
 return window.location.reload();
   }
 

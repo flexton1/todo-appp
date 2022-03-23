@@ -34,7 +34,7 @@ export class EditTodoDialogComponent implements OnInit {
     };
     this._dataService.addTodo(updatedTodo).subscribe((data) => {
       console.log('response', data);
-      this._router.navigateByUrl('/expenses');
+      this._router.navigateByUrl('/todos');
     });
     this.dialogRef.close(updatedTodo);
     return window.location.reload();
